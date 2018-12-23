@@ -1,0 +1,63 @@
+\documentclass[english,a4paper,oneside]{scrbook}
+\pagestyle{plain}
+
+\usepackage[citestyle=numeric-comp,style=numeric,giveninits=true,backend=biber,isbn=false,doi=false,dateabbrev=false,url=false]{biblatex}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nodayofweek]{datetime}
+\usepackage{siunitx,color,amsmath,acro,caption,upquote,pdfpages,amsthm,cleveref,amsfonts,stmaryrd,comment}
+%\usepackage{listings}
+%\usepackage{float}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}{Example}[theorem]
+\newcommand{\f}[1]{#1:\mathbb{R}\rightarrow\mathbb{R}}
+\newcommand{\id}{\mathrm{id}_\mathbb{R}}
+\newcommand{\Mathref}[1]{\mathrm{\Cref{#1}}}
+\newcommand{\E}{\mathrm{E}}
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\independent}{\perp\!\!\!\perp}
+
+
+\hypersetup{
+    linktoc=all
+}
+
+\addbibresource{paper.bib}
+
+\hyphenation{}
+
+\author{Nicholas-Philip Brandt}
+\title{Bell's inequality and its violation}
+
+\input{sections/acronyms.tex}
+
+\begin{document}
+
+\maketitle
+
+\frontmatter
+\setcounter{page}{1}
+\pagenumbering{roman}
+\tableofcontents
+
+\mainmatter
+\input{sections/content.tex}
+
+\printbibliography[heading=bibintoc]
+
+\listoffigures
+
+\newpage
+\addcontentsline{toc}{chapter}{Acronyms}
+\printacronyms
+
+% \listoftables
+% \input{sections/formulas.tex}
+% \appendix
+% \input{sections/appendix.tex}
+
+\end{document}

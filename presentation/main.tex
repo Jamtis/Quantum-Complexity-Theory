@@ -1,0 +1,57 @@
+\documentclass[18pt]{beamer}
+\usetheme{kit}
+
+\usepackage{xcolor,ulem,braket}
+
+\definecolor{kitgreen}{HTML}{009286}
+\newcommand{\green}[1]{\protect\textcolor{kitgreen}{#1}}
+
+\renewcommand{\Pr}[1]{P\left[#1\right]}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\newcommand{\QTM}{\green{QTM}}
+\newcommand{\Q}{\green{\mathcal{Q}}}
+\newcommand{\Qdash}{\green{\mathcal{Q'}}}
+\newcommand{\M}{\mathcal{M}}
+
+\newcommand{\cclass}[1]{\mathbf{#1}}
+
+\newcommand{\BQP}{\green{\cclass{BQP}}}
+\renewcommand{\P}{\cclass{P}}
+\newcommand{\PSPACE}{\cclass{PSPACE}}
+\newcommand{\BPP}{\cclass{BPP}}
+\newcommand{\NP}{\cclass{NP}}
+\newcommand{\NPI}{\cclass{NPI}}
+\newcommand{\NPC}{\cclass{NPC}}
+\newcommand{\PH}{\cclass{PH}}
+\newcommand{\EXP}{\cclass{EXP}}
+
+% if you want to see BibTeX keys in the references view instead of the symbol,
+% uncomment the following line
+% \usebibitemtemplate{\insertbiblabel}
+
+% uncomment the following line if you want to hide the navigation symbols
+%\beamertemplatenavigationsymbolsempty 
+
+\title[Short Title]{\LARGE The Error-Bounded Quantum\\Polynomial Time Class $\BQP$}
+\subtitle{26.11.2018}
+\author{Nicholas-Philip Brandt}
+
+\institute[ITI]{Department of Informatics, Institute of Theoretical Informatics}
+
+\begin{document}
+
+\selectlanguage{english}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}
+	\frametitle{Outline}
+	\tableofcontents
+\end{frame}
+
+\include{content}
+
+\end{document}
