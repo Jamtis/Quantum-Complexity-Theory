@@ -1,16 +1,44 @@
-\documentclass[english,a4paper,oneside]{scrbook}
+\documentclass[english,a4paper]{scrartcl}
 \pagestyle{plain}
 
 \usepackage[citestyle=numeric-comp,style=numeric,giveninits=true,backend=biber,isbn=false,doi=false,dateabbrev=false,url=false]{biblatex}
-\usepackage[hidelinks]{hyperref}
+\usepackage[hidelinks,breaklinks=true]{hyperref}
 \usepackage[nodayofweek]{datetime}
 \usepackage{siunitx,color,amsmath,acro,caption,upquote,pdfpages,amsthm,cleveref,amsfonts,stmaryrd,comment}
 %\usepackage{listings}
 %\usepackage{float}
 
+\usepackage{xcolor,braket,breakcites}
+
+\definecolor{kitgreen}{HTML}{009286}
+\newcommand{\green}[1]{\protect\textcolor{kitgreen}{#1}}
+
+\renewcommand{\Pr}[1]{P\left[#1\right]}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+
+\newcommand{\QTM}{\green{QTM}}
+\newcommand{\Q}{\green{\mathcal{Q}}}
+\newcommand{\Qdash}{\green{\mathcal{Q'}}}
+\newcommand{\M}{\mathcal{M}}
+
+\newcommand{\cclass}[1]{\mathbf{#1}}
+
+\newcommand{\BQP}{\green{\cclass{BQP}}}
+\newcommand{\BQPC}{\green{\cclass{BQPC}}}
+\renewcommand{\P}{\cclass{P}}
+\newcommand{\PSPACE}{\cclass{PSPACE}}
+\newcommand{\BPP}{\cclass{BPP}}
+\newcommand{\NP}{\cclass{NP}}
+\newcommand{\NPI}{\cclass{NPI}}
+\newcommand{\NPC}{\cclass{NPC}}
+\newcommand{\PH}{\cclass{PH}}
+\newcommand{\EXP}{\cclass{EXP}}
+
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{remark}[theorem]{Remark}
 \newtheorem{notation}[theorem]{Notation}
+\newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{example}{Example}[theorem]
@@ -31,7 +59,7 @@
 \hyphenation{}
 
 \author{Nicholas-Philip Brandt}
-\title{Bell's inequality and its violation}
+\title{Bounded-Error Quantum Polynomial-Time Class and its Relations to Classical Complexity Classes}
 
 \input{sections/acronyms.tex}
 
@@ -39,20 +67,21 @@
 
 \maketitle
 
-\frontmatter
+% \frontmatter
 \setcounter{page}{1}
 \pagenumbering{roman}
 \tableofcontents
 
-\mainmatter
+% \mainmatter
 \input{sections/content.tex}
 
+\newpage
 \printbibliography[heading=bibintoc]
 
 \listoffigures
 
 \newpage
-\addcontentsline{toc}{chapter}{Acronyms}
+\addcontentsline{toc}{section}{Acronyms}
 \printacronyms
 
 % \listoftables
