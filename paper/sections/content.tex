@@ -5,10 +5,10 @@ Since Manin \cite{manin_1980} and Feynman \cite{feynman_1982} independently intr
 
 To concretize this vague statement is to compare the respective classes of efficient computability for the quantum and the classical computer.
 A mathematical computation model and a definition of efficient computability are therefore necessary in the quantum context.
-Deutsch formulated the former \cite{deutsch_1985} as the \acl{QTM}; while Bernstein and Vazirani provided the latter \cite{bernstein_vazirani_1997} -- the \ac{BQP}.
+Deutsch formulated the former \cite{deutsch_1985} as the \acf{QTM}; while Bernstein and Vazirani provided the latter \cite{bernstein_vazirani_1997} -- the class \ac{BQP}.
 This work follows the latter paper in large parts.
 
-Although some relations to (classical) complexity classes have been established, many are still open.
+Although some relations of $\BQP$ to (classical) complexity classes have been established, most are still open.
 One of them is--intuitively--whether quantum computers indeed yield any advantage over classical computers.
 
 The field of quantum complexity theory tries to distinguish the quantum computation model from (classical) computation models more precisely.
@@ -20,7 +20,7 @@ However the application, the clarification of the border between quantum and cla
 
 \subsection{\acl{QTM}}
 
-Like the normal Turing machine represents a computation model of a classical mechanical machine, the \acl{QTM} models computation within quantum mechanics.
+Like the normal Turing machine represents a computation model of a classical mechanical machine, the \acf{QTM} models computation within quantum mechanics.
 In some sense the \ac{QTM} is a generalization of the classical \ac{TM}, just as quantum mechanics is a generalization of classical mechanics.
 
 In 1985 Deutsch \cite{deutsch_1985} provided an original definition of this computation model.
@@ -40,15 +40,23 @@ A \ac{QTM} $M$ is defined by a triplet $(\Sigma, Q, \delta)$, where $\Sigma$ is 
     \mathbf{\tilde{C}}^{\Sigma\times Q\times\{L,R\}}
     \ .
 \end{equation*}
-The \ac{QTM} has a two-way infinite tape of cells indexed by $\mathbf{Z}$ and a single read/write tape head that moves along the tape.
+The \ac{QTM} has a two-way infinite tape of cells indexed by $\mathbb{Z}$ and a single read/write tape head that moves along the tape.
 We define configurations, initial configurations, and final configurations exactly as for deterministic \acp{TM}.
 \end{definition}
 
 As usual, the number of tapes, the alphabet size and whether the tape head may rest in one step are irrelevant with regards to polynomial runtime.
-Each \ac{QTM} describes a time evolution operator which represents the evolution (e.g. superposition of to new states) of the machines state in one time step.
+$\mathcal{S}\subset\{0,1\}^*$ denotes the finite space of basis states and is assume to be equal for all \acp{QTM} in the following; a basis state corresponds to a pure (non-superposed) configuration of the $\QTM$.
+Each \ac{QTM} describes a time evolution operator which represents the evolution (e.g. superposition of two new states) of the machines state in one time step.
 
 A special circumstance in the quantum world is the issue of measurement -- an open philosophical question leading to different interpretations of quantum theory.
-What it means to measure the (partial) state of a \ac{QTM} is to be handled pragmatically -- simply as a random variable with a certain probability distribution.
+Without philosophical implications we'll say that the measurement of the (partial) state of a \ac{QTM} is simply modeled as a random variable with a certain probability distribution.
+Arbitrarily, we decide that the first cell of the write tape serves as the acceptance indicator.
+This means the acceptance ($b=1$) and rejection ($b=0$) probability of a \ac{QTM} in state $\ket{\phi}=\sum_{i\in\mathcal{S}}\alpha_i\ket{i}$ is
+\begin{equation}
+    \Pr{M(x)=b}
+    =\sum_{i\in\mathcal{S}:i_0=b}\abs{\alpha_i}^2
+    \ .
+\end{equation}
 
 \acp{QTM} may have various properties that prove useful for the proofs in \cref{Relations}.
 
@@ -56,7 +64,6 @@ Strictly speaking, the mathematical model of the \ac{QTM} is too powerful to cor
 Quantum physics adheres to unitarity -- that is the preservation of euclidian length of a state after one application of the time evolution operator.
 An other way of formulating unitarity is to say that the time evolution operator describes a rotation in the space of states -- and therefore preserving length.
 \acp{QTM} exhibiting this property are called well-formed.
-$\mathcal{S}$ denotes the space of states and is assume to be equal for all \ac{QTM} in the following.
 \begin{definition}
 Wellformedness (Definition 3.3 in \cite{bernstein_vazirani_1997})
 
@@ -67,18 +74,18 @@ A \ac{QTM} $M$ is well-formed iff for each $\phi\in\mathcal{S}$ follows
 \end{equation*}
 \end{definition}
 
-Discrimination of \ac{QTM} requires a measure of distance between to \acp{QTM}.
-In the following we given some results that establish a distance measure; ultimately to determine what it means for a \ac{QTM} to simulate another $\ac{QTM}$ within some margin of error.
-We start from a constructivist point of view defining an initial measure and then deduce how this distance (error) propagates though the simulation process and how it alters the acceptance behaviour of the simulating \ac{QTM} with respect to the original one.
+Discrimination of \acp{QTM} requires a metric space of \acp{QTM}.
+In the following, we give some results that establish a specific distance function; ultimately to determine what it means for a \ac{QTM} to simulate another $\ac{QTM}$ within some margin of error.
+We start from a constructivist point of view defining an initial metric and then deduce how this distance (error) propagates though the simulation process and how it alters the acceptance behaviour of the simulating \ac{QTM} with respect to the original one.
 
-A measure arising from constructing a \ac{QTM} by its transition amplitudes is the so-called $\epsilon$-closeness.
+A metric arising from constructing a \ac{QTM} by its transition amplitudes is the so-called $\epsilon$-closeness.
 \begin{definition}
 $\epsilon$-Closeness (Definition 3.8 in \cite{bernstein_vazirani_1997})
 
 We say that \acp{QTM} $M$ and $M'$ are $\epsilon$-close if they have the same state set and alphabet and if the difference between each pair of corresponding transition amplitudes has magnitude at most $\epsilon$.
-Note that $M$ and $M'$ can be $\epsilon$-close even if one or both are not well formed.
+Note that $M$ and $M'$ can be $\epsilon$-close even if one or both are not well-formed.
 \end{definition}
-This measure proves useful when representing formal \ac{QTM} within a classical \ac{TM} where the transition amplitudes must be approximated to some degree; for example the amplitude $\frac{1}{3}$ is valid for a formal \ac{QTM} but requires a infinite amount of storage in a classical \ac{TM}.
+This definition proves useful when formally representing a \ac{QTM} within a classical \ac{TM} where the transition amplitudes must be approximated to some degree; for example the amplitude $\frac{1}{3}$ is valid for a formal \ac{QTM} but requires a infinite amount of storage in a classical \ac{TM}.
 
 \begin{theorem}
 \label{th:bete}
@@ -140,7 +147,7 @@ Informally, this means that the total error of one time evolution step (the dist
 We can--therefore--limit the overall state distance by requiring sufficient $\epsilon$-closeness.
 
 Furthermore, the error (state distance) between unequal machines propagates through time.
-A maximal time evolution error of $\kappa$ in one step results in a maximal distance of $((T\cdot\kappa)$ after $T$ steps.
+A maximal time evolution error of $\kappa$ in one step results in a maximal distance of $T\cdot\kappa$ after $T$ steps.
 This theorems shows that the error induced by $\epsilon$-close machines does not limit the runtime significantly.
 The distance between the desired state $U^T\ket{\phi}$ and the approximation state ${U'}^T\ket{\phi}$ scales only linearly with runtime $T$.
 \begin{theorem}
@@ -234,17 +241,17 @@ and plug it in the definition of the total variation distance
     =\frac{1}{2}\sum_i\abs{\abs{\gamma_i}^2+\gamma^*_i\beta_i+\beta^*_i\gamma+\abs{\beta_i}^2-\abs{\beta_i}^2}
     \\
     =\frac{1}{2}\sum_i\abs{\abs{\gamma_i}^2+\gamma^*_i\beta_i+\beta^*_i\gamma}
-    \overset{(1)}{\leq}\frac{1}{2}\sum_i\left(\abs{\gamma_i}^2+\abs{\gamma^*_i\beta_i}+\abs{\beta^*_i\gamma_i}\right)
+    \overset{(a)}{\leq}\frac{1}{2}\sum_i\left(\abs{\gamma_i}^2+\abs{\gamma^*_i\beta_i}+\abs{\beta^*_i\gamma_i}\right)
     \\
-    \overset{(2)}{\leq}\frac{1}{2}\left[\left(\sum_i\abs{\gamma_i}^2\right)+\left(\norm{\gamma^*}\norm{\beta}+\norm{\beta^*}\norm{\gamma}\right)\right]
-    \overset{(3)}{\leq}\frac{1}{2}\left(d^2+2d\right)
+    \overset{(b)}{\leq}\frac{1}{2}\left[\left(\sum_i\abs{\gamma_i}^2\right)+\left(\norm{\gamma^*}\norm{\beta}+\norm{\beta^*}\norm{\gamma}\right)\right]
+    \overset{(c)}{\leq}\frac{1}{2}\left(d^2+2d\right)
     \leq 2d
 \end{multline}
-where $(1)$ follows from the triangle inequality, $(2)$ from the Cauchy-Schwarz inequality and $(3)$ from the maximal distance of $\ket{\phi}$ and $\ket{\psi}$.
+where $(a)$ follows from the triangle inequality, $(b)$ from the Cauchy-Schwarz inequality and $(c)$ from the maximal distance of $\ket{\phi}$ and $\ket{\psi}$.
 \end{proof}
 \end{lemma}
 
-Finally, we define what it means to simulate a \ac{QTM}.
+Finally, we define what it means to simulate a \ac{QTM} with another \ac{QTM}.
 \begin{definition}
 Accuracy (Definition 3.5 in \cite{bernstein_vazirani_1997})
 
@@ -265,6 +272,7 @@ To examine the capabilities of \acp{QTM} not just in terms of effectiveness but 
 With a suited interpretation of the \ac{QTM}--that is with the same interface as a classical \ac{TM} (input as a $n$-bit string, output one bit)-- the definition of "efficiently decidable" class follows canonically from the classical analog $\BPP$.
 
 \begin{definition}
+\label{def:BQP}
 \acf{BQP}
 
 The complexity class $\BQP$ may be defined as the class of languages for which there exists a \ac{QTM} $Q$ such that $Q$ accepts all $x\in L$ and rejects all $x\not\in L$ with at least probability of $\frac{2}{3}$; or more formally
@@ -291,7 +299,13 @@ As usual, the constant acceptance probability of $\frac{2}{3}$ is arbitrary; eve
 \subsection{$\BQP$ vs $\BPP$}
 
 Because a \ac{QTM} is a generalization of the classical \ac{TM} it is intuitive that $\BPP\subseteq\BQP$.
-@TODO: Include formal proof or refer to it
+While the formal proof requires many technicalities such as "dovetailing" or synchronization of  \acp{QTM}, we only sketch out the idea of the proof here and refer to the original proof for mathematical rigour (Theorem 8.3 in \cite{bernstein_vazirani_1997}).
+
+First note that a deterministic \ac{TM} can be efficiently simulated by a reversible deterministic \ac{TM} which is also a well-formed \ac{QTM} (see Theorem 4.2 in \cite{bernstein_vazirani_1997}).
+Consequently, $\P\subseteq\BQP$.
+If the language $L$ with indicator function $\chi$ is in $\BPP$ then a probabilistic \ac{TM} $M$ exists that decides $L$ in polynomial time $p(\abs{x})$.
+$M$ can also be interpreted as a deterministic \ac{TM} $D$ with a dedicated second input as its random string of polynomial length $r\in R=\{0,1\}^{p(\abs{x})}$ such that $D(x;r)=\chi(x)$ for at least $\frac{2}{3}$ of all random strings $R$.
+Now a \ac{QTM} version of $D$ can take $x$ and an equal superposition of all $r\in R$ and the correct result will have at least $\frac{2}{3}$ probability.
 
 On the other hand, $\BQP\subseteq\BPP$ is neither known and nor guessed to be true.
 In fact, the opposite conjecture $\BPP\subset\BQP$ is the driving force behind the recent interest in quantum computing as it says that quantum computers yield a superpolynomial advantage over classical computers for \textbf{some} problems.
@@ -299,12 +313,12 @@ In fact, the opposite conjecture $\BPP\subset\BQP$ is the driving force behind t
 \subsection{$\BQP$ vs $\EXP$}
 
 Naturally--from the desire to pin down the borders of quantum computing--the question arises: what is the upper limit of the efficiency advantage of \acp{QTM}?
-One upper limit is $\BQP\subseteq\EXP$, in other words this means that a language that a quantum computer can decide in polynomial time a classical computer can decide in exponential time.
-Inversely a quantum computer may in principle only ever yield a exponential speedup over any classical computer.
+One upper limit is $\BQP\subseteq\EXP$, in other words this means, that a language that a quantum computer can decide in polynomial time, a classical computer can decide in exponential time.
+Inversely, a quantum computer may in principle only ever yield a exponential speedup over any classical computer.
 Even Shor's algorithm \cite{shor_1997} does only exhibit a superpolynomial but subexponential speedup over the general number field sieve (the best classical algorithm for integer factorization to date).
 
-Also it means that the progress and therefore the state of a (efficient) \ac{QTM} can be simulated purely classically.
-The proof of this upper limit showcases the technique of simulating a \ac{QTM} classically with sufficient accuracy so that the difference in output are negligible.
+Also, it means that the progress and therefore the state of a (efficient) \ac{QTM} can be simulated purely classically.
+The proof of this upper limit showcases the technique of simulating a \ac{QTM} classically with sufficient accuracy so that the difference of outputs is negligible.
 
 \begin{theorem}
 \label{th:bqpexp}
@@ -326,8 +340,8 @@ Then, for some $c'>0$
     \in\frac{1}{2}+\Omega\left(\abs{x}^{-c'}\right)
 \end{equation}
 is sufficient for $M'$ to decide $L$.
-Analogously, such a $\zeta$ and $c$ exists for $M$.
-In the following, we give a $\zeta'$ and $c'$ that satisfies \cref{eq:samelang}.
+Analogously, such a $\zeta$ and $c$ exists for $M$ by \cref{def:BQP}.
+In the following, we give a $\zeta'$ and $c'$ that satisfy \cref{eq:samelang}.
 Now assume an accuracy (total variation distance) between $M$ and $M'$ of at most $a$.
 Applying the definition of the total variation distance gives
 \begin{multline}
@@ -345,7 +359,6 @@ In case $\Pr{M(x)=b)}>\Pr{M'(x)=b}$ consider the following bound
     \\
     \geq\abs{\Pr{M(x)=b}-\Pr{M'(x)=b}}
     =\Pr{M(x)=b}-\Pr{M'(x)=b}
-    \ .
 \end{multline}
 which results from multiplying the previous inequality with $2$.
 Rearranging the terms gives
@@ -353,44 +366,43 @@ Rearranging the terms gives
     \Pr{M'(x)=b}
     \geq \Pr{M(x)=b}-2a
     =\frac{1}{2}+\zeta(\abs{x})-2a
-    \overset{\eqref{eq:samelang}}{\in}\frac{1}{2}+\Omega(\abs{x}^{-c'})
 \end{equation}
 which means that if $a$ is small enough, then \cref{eq:samelang} is satisfied.
-Somewhat arbitrarily, choosing $a:=\frac{1}{2}\zeta(\abs{x})\in\frac{1}{2}+\Omega(\abs{x}^{-c})$ results in
+Somewhat arbitrarily, choosing $a:=\frac{1}{4}\zeta(\abs{x})\in\Omega(\abs{x}^{-c})$ results in
 \begin{equation}
     \Pr{M'(x)=b}
     \geq\frac{1}{2}+\frac{1}{2}\zeta(\abs{x})
-    \in\frac{1}{2}+\Omega(\abs{x}^{-c})
+    \overset{\eqref{eq:samelang}}{\in}\frac{1}{2}+\Omega(\abs{x}^{-c'})
 \end{equation}
 and thus \cref{eq:samelang} is satisfied with $\zeta'=\frac{1}{2}\zeta$ and $c'=c$.
 \\
-So in both case there exists a $\zeta'=\frac{1}{2}\zeta$ and a $c'=c>0$ such that the probability of $M'$ (accepting and rejecting) meets the requirements for $M'$ to be a $\BQP$ machine.
+So in both case there exists a $\zeta'=\frac{1}{4}\zeta$ and a $c'=c>0$ such that the probability of $M'$ (accepting and rejecting) meets the requirements for $M'$ to be a $\BQP$ machine.
 
-Furthermore, we want to determine the necessary $\epsilon$-closeness for the required accuracy $a=\frac{1}{2}\zeta(\abs{x})$.
+Furthermore, we want to determine the necessary $\epsilon$-closeness for the required accuracy $a=\frac{1}{4}\zeta(\abs{x})$.
 Recall \cref{col:etod}.
 Then the required closeness for $M'$ to simulate $M$ in $T(\abs{x})$ steps with sufficient accuracy $a$--for $M'$ to be a $\BQP$ machine--is
 \begin{equation}
     a
     =4\cdot\abs{\Sigma}\cdot\abs{Q}\cdot\epsilon\cdot T(\abs{x})
-    \overset{!}{=}\frac{1}{2}\zeta(\abs{x})
+    \overset{!}{=}\frac{1}{4}\zeta(\abs{x})
     \Rightarrow
     \epsilon
-    =\frac{\zeta(\abs{x})}{8\cdot\abs{\Sigma}\cdot\abs{Q}\cdot T(\abs{x})}
+    =\frac{\zeta(\abs{x})}{16\cdot\abs{\Sigma}\cdot\abs{Q}\cdot T(\abs{x})}
     \ .
 \end{equation}
 Because $\frac{1}{\zeta(\abs{x})}$ and $T(\abs{x})$ are both polynomials in $\abs{x}$ the necessary precision of $\epsilon$--that is the bits required to represent $\epsilon$--is $\log_2\left(\frac{1}{\epsilon}\right)\in\Theta\left(\log(\abs{x})\right)$.
 
 Informally, this means that a "discretized" version of $M$ can be used to decided the same language that $M$ decides.
-This version $M'$ can be represented by finite many bits -- as the amount of bits necessary to accurately describe the transition amplitudes is only logarithmic in input size $\abs{x}$.
+This version $M'$ can be represented by finite many bits -- as the amount of bits necessary to accurately describe the transition amplitudes grows only logarithmic in input size $\abs{x}$.
 
-Now we lay out the way a deterministic \ac{TM} $M^*$ can simulate $M'$.
-Consider the configuration graph $G$ of $M'$; the runtime of $M'$ $T(\abs{x})$ is also the length of all paths in $G$.
+Now we lay out the way a deterministic \ac{TM} $D$ can simulate $M'$.
+Consider the configuration graph $G$ of $M'$; the runtime of $M'$ $T(\abs{x})$ is also the length of all paths in $G$ -- assuming only machines that halt after finitely many steps (no loops).
 However, there may be exponentially many paths.
-$M*$ calculates the amplitudes of each path by multiplying the transition amplitudes along a path.
-The amplitudes can only be calculated by $M^*$ because of the discretized nature of $M'$, thus the required bits to represent a path amplitude are in $\mathcal{O}\left(\log_2(\abs{x})\cdot T(\abs{x})\right)$ -- still only polynomial in $\abs{x}$.
-Afterwards $M^*$ sums up all squared magnitudes of paths which lead to accepting configurations.
-If the sum exceeds $\frac{1}{2}+\zeta'(\abs{x})$, then $M^*$ outputs $1$ and $0$ else.
-The overall runtime is exponential due to the exponential size of $G$.
+$D$ calculates the amplitudes of each path by multiplying the transition amplitudes along any path.
+The amplitudes can only be calculated by $D$ because of the discretized nature of $M'$, thus the required bits to represent a path amplitude are in $\mathcal{O}\left(\log_2(\abs{x})\cdot T(\abs{x})\right)$ -- still only polynomial in $\abs{x}$.
+Afterwards $D$ sums up all squared magnitudes of paths which lead to accepting configurations.
+If the sum exceeds $\frac{1}{2}+\zeta'(\abs{x})$, then $D$ outputs $1$ and $0$ else.
+The overall runtime may be exponential due to the exponential size of $G$.
 \end{proof}
 \end{theorem}
 
@@ -405,19 +417,20 @@ $\BQP\subseteq\PSPACE$
 This proof is analog to $\BQP\subseteq\EXP$ inspired by the original proof in \cite{bernstein_vazirani_1997}.
 
 Analogously to \cref{th:bqpexp} we use a discretized version $M'$ of $M$ which we want to simulate using a deterministic \ac{TM} $D$ in $\PSPACE$.
-The problem--with the strategy of first calculating the amplitudes of all paths and the summing them up--is obviously that there are exponentially many path and therefore a $\PSPACE$ machine cannot save all path amplitudes.
+The problem--with the strategy of first calculating the amplitudes of all paths and the summing them up--is obviously that there may be exponentially many path and therefore a $\PSPACE$ machine cannot store all path amplitudes.
 
 The simple solution to this problem is to use a depth-first search over the configuration graph $G$ and calculate the acceptance probability--that is the squared magnitudes of all paths leading to accepting configurations--as a running sum.
-Because a depth-first search over a graph with distance $T(\abs{x})$ requires only space $\Omega(T(\abs{x}))$ $D$ is indeed a $\PSPACE$ machine -- although the calculation may require exponential time.
+Because a depth-first search over a graph with distance $T(\abs{x})$ requires only space $\mathcal{O}(T(\abs{x}))$ $D$ is indeed a $\PSPACE$ machine -- although the calculation may require exponential time.
 Also, the number of required bits for the acceptance probability grows only logarithmically in the (exponential) number of contributing paths.
 The overall number of required bits is again polynomial in $\abs{x}$.
 \end{proof}
 \end{theorem}
 This result is particularly interesting because even $\P\overset{?}{=}\PSPACE$ is still an open question.
-A result like $\BPP\subset\BQP$ or $\BQP\subset\PSPACE$ would already separate $\P$ from $\PSPACE$; showing the difficulty of the proofs of these statements.
+A strict inclusion result like $\BPP\subset\BQP$ or $\BQP\subset\PSPACE$ would already include $\P$ strictly in $\PSPACE$; showing the difficulty of the proofs of these statements.
 
 \subsection{$\BQP$ vs $\NP$ and $\NPC$}
-To further pin down the boundaries of $\BQP$ it might be useful to compare it to other well-known complexity classes such as $\NP$ -- also incorporating as special computation model.
+To further pin down the boundaries of $\BQP$ it might be useful to compare it to other well-known complexity classes such as $\NP$.
+This is of particular interest because the relation between quantum machines and nondeterministic machines may provide deep insight into the underlying computation models.
 However, just as no relation between $\NP$ and $\BPP$ could yet be established, no relation between $\NP$ and $\BQP$ could either.
 
 Note that these consideration only make sense given $\P\neq\NP$; otherwise the question reduces to $\P\overset{?}{\neq}\BQP$.
@@ -466,9 +479,9 @@ Thus, \ac{IF} seems to be in the intersection $(\NP\cap\BQP)\setminus\P$.
 
 To show that $\BQP\not\subseteq\NP$, it is natural to look at $\BQP$-complete problems ($\BQPC$) as they are the least likely to be contained in $\NP$.
 Although there are known $\BQPC$ problems \cite{pawel_shengyu_2006}, non are known to be in $\NP$.
-In contrast, any strict inclusion $\BQP\subset\NP$ or $\NP\subset\BQP$ would already introduce a separation between $\P$ and $\PSPACE$.
+In contrast, any strict inclusion $\BQP\subset\NP$ or $\NP\subset\BQP$ would already introduce a strict inclusion of $\P$ in $\PSPACE$.
 
-To summarize, the default conjecture is that problems like \ac{IF} lie at the intersection of $\NP$ and $\BQP$ and both classes have their respective complete subsets outside of each other; compare \cref{fig:overview}.
+To summarize, the default conjecture is that problems like \ac{IF} lie at the intersection of $\NP$ and $\BQP$ and both classes have their respective complete subsets ($\NPC$ and $\BQPC$) outside of each other; compare \cref{fig:overview}.
 Much work is to be done in this area, not only as a mathematical exercise but foremost to increase the understanding of the underlying computational model.
 
 \section{Summary}
@@ -481,7 +494,7 @@ Basic bounds like $\BQP\subseteq\PSPACE$ have been shown but most relations to r
 A critical reason for the difficulty of separating $\BQP$ from other classes lies in the fact that it would also imply the solution to major complexity-theoretical problems like $\P\overset{?}{\neq}\NP$ or $\P\overset{?}{=}\PSPACE$.
 Especially the relation of $\BQP$ and $\NP$ is of particular interest because both classes are the efficient variants of their respective computational models.
 
-An more practical aspect of quantum complexity theory is the search for and construction of efficient quantum algorithms for $\BQPC$ problems.
+A more practical aspect of quantum complexity theory is the search for and construction of efficient quantum algorithms for $\BQPC$ problems.
 These algorithms will harvest the full (potential) quantum advantage and as a byproduct help to speed up the solution of $\NPC$ problems to the greatest degree.
 
 The rigorous establishment of relations between quantum and classical complexity is crucial, not only because the canon of knowledge on this field is small in comparison to the projected technological progress but to ensure future investment in the field of quantum complexity and--maybe most importantly--the information it provides about the fundamental mechanisms governing the behaviour of physics.
